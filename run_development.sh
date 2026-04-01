@@ -1,7 +1,7 @@
 #!/bin/bash
 
 CURRENT_PATH="$(cd "$(dirname "$1")" || exit; pwd)/$(basename "$1")"
-IMAGE_NAME=ghcr.io/navikt/pdfgen:2.0.111
+IMAGE_NAME=ghcr.io/navikt/pdfgen:2.0.114
 
 docker pull ${IMAGE_NAME}
 docker run \
