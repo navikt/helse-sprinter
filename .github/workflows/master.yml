@@ -4,7 +4,9 @@ on:
   push:
     branches:
       - master
-
+  schedule:
+    - cron: '0 4 * * 3'
+      timezone: 'Europe/Oslo'
 permissions:
   contents: read
   id-token: write
@@ -21,7 +23,7 @@ jobs:
           team: tbd
     outputs:
       image: ${{ steps.docker-build-push.outputs.image }}
-  
+
   deploy:
     name: deploy
     needs: build
