@@ -120,7 +120,7 @@
     ]
   ],
   [
-    #if "totrinnsvurdertAv" in data [
+    #if "totrinnsvurdertAv" in data and data.totrinnsvurdertAv != none [
       === Kontrollert av
       #data.totrinnsvurdertAv
     ]
@@ -252,7 +252,7 @@
     === Rapportert årsinntekt
     #for ag in data.arbeidsgivere [Orgnr. #ag.organisasjonsnummer: #format_currency(ag.innrapportertÅrsinntekt) kr \ ]
   ],
-  ..if "skjønnsfastsettingårsak" in data {([
+  ..if "skjønnsfastsettingårsak" in data and data.skjønnsfastsettingårsak != none {([
     === Skjønnsfastsatt årsinntekt
     #for ag in data.arbeidsgivere [Orgnr. #ag.organisasjonsnummer: #format_currency(ag.skjønnsfastsatt) kr \ ]
   ],)},
@@ -272,7 +272,7 @@
 
 // --- Skjønnsfastsettelse ---
 
-#if "skjønnsfastsettingårsak" in data [
+#if "skjønnsfastsettingårsak" in data and data.skjønnsfastsettingårsak != none [
   #block(breakable: false)[
     == Sykepengegrunnlaget er skjønnsfastsatt
 
@@ -284,12 +284,10 @@
       === Årsak
       #data.skjønnsfastsettingårsak
     ],
-    [
-      #if "skjønnsfastsettingtype" in data [
+      ..if "skjønnsfastsettingtype" in data and data.skjønnsfastsettingtype != none {([
         === Type skjønnsfastsettelse
         #data.skjønnsfastsettingtype
-      ]
-    ],
+      ],)},
     ..if "begrunnelseFraMal" in begrunnelser {([
       === Begrunnelse
       #begrunnelser.begrunnelseFraMal

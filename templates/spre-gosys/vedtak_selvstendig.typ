@@ -120,7 +120,7 @@
     ]
   ],
   [
-    #if "totrinnsvurdertAv" in data [
+    #if "totrinnsvurdertAv" in data and data.totrinnsvurdertAv != none [
       === Kontrollert av
       #data.totrinnsvurdertAv
     ]
@@ -265,7 +265,7 @@
 
 // --- Skjønnsfastsettelse ---
 
-#if "skjønnsfastsettingårsak" in data [
+#if "skjønnsfastsettingårsak" in data and data.skjønnsfastsettingårsak != none [
   #block(breakable: false)[
     #v(4mm)
     #line(length: 100%, stroke: 1pt)
@@ -281,21 +281,19 @@
         === Årsak
         #data.skjønnsfastsettingårsak
       ],
-      [
-        #if "skjønnsfastsettingtype" in data [
-          === Type skjønnsfastsettelse
-          #data.skjønnsfastsettingtype
-        ]
-      ],
-      ..if "begrunnelseFraMal" in begrunnelser {(grid.cell(colspan: 2)[
+      ..if "skjønnsfastsettingtype" in data and data.skjønnsfastsettingtype != none {([
+        === Type skjønnsfastsettelse
+        #data.skjønnsfastsettingtype
+      ],)},
+      ..if "begrunnelseFraMal" in begrunnelser {([
         === Begrunnelse
         #begrunnelser.begrunnelseFraMal
       ],)},
-      ..if "begrunnelseFraFritekst" in begrunnelser {(grid.cell(colspan: 2)[
+      ..if "begrunnelseFraFritekst" in begrunnelser {([
         === Begrunnelse fra saksbehandler
         #begrunnelser.begrunnelseFraFritekst
       ],)},
-      ..if "begrunnelseFraKonklusjon" in begrunnelser {(grid.cell(colspan: 2)[
+      ..if "begrunnelseFraKonklusjon" in begrunnelser {([
         === Konklusjon
         #begrunnelser.begrunnelseFraKonklusjon
       ],)},
