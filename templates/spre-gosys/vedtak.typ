@@ -1,3 +1,5 @@
+#import "@preview/oxifmt:1.0.0": strfmt
+
 // Leser data fra JSON-fil
 #let data = json("/data/spre-gosys/vedtak.json")
 
@@ -20,16 +22,7 @@
 }
 
 #let format_currency(amount) = {
-  let s = str(int(amount))
-  let result = ""
-  let len = s.len()
-  for i in range(len) {
-    if i > 0 and calc.rem(len - i, 3) == 0 {
-      result = result + " "
-    }
-    result = result + s.at(i)
-  }
-  result
+  strfmt("{:.2}", float(amount), fmt-thousands-separator: " ", fmt-decimal-separator: ",")
 }
 
 // --- Sideoppsett ---
