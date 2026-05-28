@@ -1,5 +1,5 @@
 // Leser data fra JSON-fil
-#let data = json("../../data/spre-gosys/ferdig_annullering.json")
+#let data = json("/data/spre-gosys/ferdig_annullering.json")
 
 // --- Hjelpefunksjoner ---
 
@@ -53,7 +53,7 @@
     columns: (2cm, 1fr),
     column-gutter: .5cm,
     align: horizon,
-    image("../../resources/NAV-logo.png", width: 2cm),
+    image("/resources/NAV-logo.png", width: 2cm, alt: "NAV-logo"),
     text(size: 20pt, weight: "semibold")[Sykepenger – utbetaling annullert i ny løsning],
   )
 ]
