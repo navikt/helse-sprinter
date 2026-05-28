@@ -11,7 +11,7 @@
 #let iso_to_nor_datetime(iso) = {
   let dt = iso.split("T")
   let date = iso_to_date(dt.at(0))
-  let time = dt.at(1).split(".").at(0)
+  let time = dt.at(1).split(".").at(0).split(":").slice(0, 2).join(":")
   date + " " + time
 }
 
@@ -23,11 +23,10 @@
 
 #set page(
   paper: "a4",
-  margin: (top: 1cm, bottom: 2.5cm, left: 1cm, right: 2cm),
+  margin: (top: 1cm, bottom: 2.5cm, left: 1cm, right: 1cm),
   footer: context [
+    #align(right)[Side #counter(page).display() av #counter(page).final().first()]
     #line(length: 100%, stroke: 1pt)
-    #v(1mm)
-    Side #counter(page).display() av #counter(page).final().first()
   ],
 )
 
@@ -54,14 +53,14 @@
     column-gutter: .5cm,
     align: horizon,
     image("/resources/NAV-logo.png", width: 2cm, alt: "NAV-logo"),
-    text(size: 20pt, weight: "semibold")[Sykepenger – utbetaling annullert i ny løsning],
+    text(size: 20pt, weight: "semibold")[Sykepenger – utbetaling annullert],
   )
 ]
 
 // --- Personinfo ---
 
 #grid(
-  columns: (1fr, 1fr),
+  columns: (1fr),
   column-gutter: 4mm,
   row-gutter: 8mm,
   [
@@ -102,8 +101,9 @@
 #v(4mm)
 
 #grid(
-  columns: (1fr, 1fr),
+  columns: (1fr),
   column-gutter: 4mm,
+  row-gutter: 8mm,
   [
     === Årsaker
     #for årsak in data.årsaker [
