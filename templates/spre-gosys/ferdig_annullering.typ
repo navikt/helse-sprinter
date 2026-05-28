@@ -2,7 +2,7 @@
 #import "/templates/spre-gosys/layout.typ": layout
 
 // Leser data fra JSON-fil
-#let data = json("/data/spre-gosys/ferdig_annullering.json")
+#let data = json(bytes(sys.inputs.at("data", default: read("/data/spre-gosys/ferdig_annullering.json"))))
 
 // --- Bruk layout ---
 

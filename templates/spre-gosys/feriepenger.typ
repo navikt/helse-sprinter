@@ -2,7 +2,7 @@
 #import "/templates/spre-gosys/layout.typ": layout
 
 // Leser data fra JSON-fil
-#let data = json("/data/spre-gosys/feriepenger.json")
+#let data = json(bytes(sys.inputs.at("data", default: read("/data/spre-gosys/feriepenger.json"))))
 
 // --- Bruk layout ---
 
