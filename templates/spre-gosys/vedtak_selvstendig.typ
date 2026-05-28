@@ -1,7 +1,7 @@
 #import "/templates/spre-gosys/utils.typ": iso_to_date, iso_to_nor_datetime, insert_space_at, format_currency
 #import "/templates/spre-gosys/layout.typ": layout
 // Leser data fra JSON-fil
-#let data = json(bytes(sys.inputs.at("data", default: read("/data/spre-gosys/vedtak_selvstendig.json"))))
+#let data = json("/data.json")
 
 // --- Bruk layout ---
 
