@@ -1,9 +1,9 @@
-name: master
+name: main
 
 on:
   push:
     branches:
-      - master
+      - main
   schedule:
     - cron: '0 4 * * 3'
       timezone: 'Europe/Oslo'
