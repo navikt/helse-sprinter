@@ -1,0 +1,27 @@
+{
+  "conversationRef": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "fra": {
+    "NAVIdent": "Z123456",
+    "navn": "Ola Nordmann"
+  },
+  "til": {
+    "navn": "Kari Lise Nordmann",
+    "kontor": {
+      "navn": "Oslo Legekontor",
+      "organisasjonsnummer": "123456789",
+      "adresse": {
+        "gate": "Storgata 1",
+        "postnummer": "0123",
+        "poststed": "Oslo"
+      }
+    }
+  },
+  "tidspunkt": "2024-06-01T12:00:00Z",
+  "gjelder": {
+    "fødselsnummer": "01010112345",
+    "navn": "Mia Cathrine Svendsen"
+  },
+  "meldingstype": "Ekstra uttalelser fra lege",
+  "fagområde": "Bestridelse",
+  "melding": "Hei, vedlagt finner dere den forespurte dokumentasjonen. Jeg har lagt ved relevant journaldokumentasjon og vurdering av pasientens tilstand. Ta gjerne kontakt dersom dere trenger ytterligere opplysninger."
+}
