@@ -1,5 +1,6 @@
-#import "/templates/spre-gosys/utils.typ": iso_to_date, iso_to_nor_datetime, insert_space_at, format_currency
-#import "/templates/spre-gosys/layout.typ": layout
+#import "/templates/felles/utils.typ": iso_to_date, iso_to_nor_datetime, insert_space_at, format_currency
+#import "/templates/felles/layout.typ": layout
+
 // Leser data fra JSON-fil
 #let data = json("/data.json")
 
