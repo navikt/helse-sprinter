@@ -18,6 +18,7 @@ spec:
     inbound:
       rules:
         - application: spre-gosys
+        - application: sporhund
     outbound:
       rules:
         - application: logging
