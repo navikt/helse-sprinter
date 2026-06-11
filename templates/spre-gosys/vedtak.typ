@@ -188,22 +188,22 @@
     === Totalt utbetalt
     #format_currency(data.sumTotalBeløp) kr
   ],
-  [
+  ..if data.arbeidsgivere != none {([
     === Omregnet årsinntekt
-    #for ag in data.arbeidsgivere [Orgnr. #ag.organisasjonsnummer: #format_currency(ag.omregnetÅrsinntekt) kr \ ]
-  ],
-  [
+    #for ag in data.arbeidsgivere [Orgnr. #ag.organisasjonsnummer: #format_currency(ag.omregnetÅrsinntekt) kr]
+  ])},
+  ..if data.arbeidsgivere != none {([
     === Rapportert årsinntekt
-    #for ag in data.arbeidsgivere [Orgnr. #ag.organisasjonsnummer: #format_currency(ag.innrapportertÅrsinntekt) kr \ ]
-  ],
-  ..if "skjønnsfastsettingårsak" in data and data.skjønnsfastsettingårsak != none {([
+    #for ag in data.arbeidsgivere [Orgnr. #ag.organisasjonsnummer: #format_currency(ag.innrapportertÅrsinntekt) kr]
+  ])},
+  ..if "skjønnsfastsettingårsak" in data and data.skjønnsfastsettingårsak != none and data.arbeidsgivere != none {([
     === Skjønnsfastsatt årsinntekt
     #for ag in data.arbeidsgivere [Orgnr. #ag.organisasjonsnummer: #format_currency(ag.skjønnsfastsatt) kr \ ]
-  ],)},
-  [
+  ])},
+  ..if data.avviksprosent != none {([
     === Utregnet avvik
     #str(data.avviksprosent) %
-  ],
+  ])},
   [
     === Sykepengegrunnlag
     #format_currency(data.sykepengegrunnlag) kr
