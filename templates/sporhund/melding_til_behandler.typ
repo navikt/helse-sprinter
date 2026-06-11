@@ -39,10 +39,6 @@
     #text[#data.gjelder.navn, #insert_space_at(data.gjelder.fødselsnummer, 6)]
   ],
   [
-    === Type melding
-    #data.meldingstype
-  ],
-  [
     === Fagområde
     #data.fagområde
   ],
