@@ -2,7 +2,7 @@
 #import "/templates/felles/layout.typ": layout
 
 // Leser data fra JSON-fil
-#let data = json("/data.json")
+#let data = json("/data/sporhund/melding_til_behandler.json")
 
 // --- Bruk layout ---
 
@@ -18,7 +18,7 @@
   column-gutter: 4mm,
   row-gutter: 8mm,
   [
-    === Vår referanse
+    == Vår referanse
     #data.conversationRef
   ],
   [

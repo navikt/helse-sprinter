@@ -1,3 +1,12 @@
+#let new-section(title, pb: true, body) = {
+  if pb {
+   pagebreak(weak: true)
+  }
+  heading(level: 2, title)
+  body
+  v(8mm, weak: false)
+}
+
 #let layout(
   title: "",
   body
@@ -10,12 +19,16 @@ set page(
     #line(length: 100%, stroke: 1pt)
   ],
 )
+set document(title: title)
 
 set text(font: "Source Sans 3", size: 12pt, lang: "nb")
 
 set heading(numbering: none)
 
-show heading.where(level: 2): it => text(size: 14pt, weight: "bold")[#it.body]
+show heading.where(level: 1): it => text(size: 20pt, weight: "semibold")[#it.body]
+
+show heading.where(level: 2): it => text(size: 14pt, weight: "semibold")[#it.body]
+
 show heading.where(level: 3): it => {
   v(5mm, weak: true)
   text(size: 12pt, weight: "semibold")[#it.body]
@@ -30,7 +43,9 @@ block(width: 100%, below: 10mm)[
     column-gutter: .5cm,
     align: horizon,
     image("/resources/NAV-logo.png", width: 2cm, alt: "NAV-logo"),
-    text(size: 20pt, weight: "semibold")[Sykepenger – #title],
+    [
+    = Sykepenger – #title
+    ]
   )
 ]
 

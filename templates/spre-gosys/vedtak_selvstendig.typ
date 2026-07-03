@@ -1,8 +1,8 @@
 #import "/templates/felles/utils.typ": iso_to_date, iso_to_nor_datetime, insert_space_at, format_currency
-#import "/templates/felles/layout.typ": layout
+#import "/templates/felles/layout.typ": layout, new-section
 
 // Leser data fra JSON-fil
-#let data = json("/data.json")
+#let data = json("/data/spre-gosys/vedtak_selvstendig.json")
 
 // --- Bruk layout ---
 
@@ -12,7 +12,7 @@
 
 // --- Personinfo ---
 
-#block(breakable: false)[
+#new-section([Sammendrag], pb: false)[
 #grid(
   columns: (1fr, 1fr),
   column-gutter: 4mm,
@@ -37,24 +37,46 @@
       #data.arbeidsgiverOppdrag.fagsystemId
     ]
   ],
+)
+\
+\
+#grid(
+  columns: (1fr, 1fr),
+  column-gutter: 4mm,
+  row-gutter: 8mm,
   [
     === Søknadsperiode
     #iso_to_date(data.fom) – #iso_to_date(data.tom)
   ],
-  [],
+    [
+      === Skjæringstidspunkt
+      #iso_to_date(data.skjæringstidspunkt)
+    ],
   [
     === Totalbeløp for denne perioden
     #format_currency(data.sumNettoBeløp) kr
   ],
   [
-    === Sendt til utbetaling
-    #iso_to_date(data.behandlingsdato)
+    === Forbrukte dager
+    #str(data.forbrukteSykedager)
   ],
   [
-    === Skjæringstidspunkt
-    #iso_to_date(data.skjæringstidspunkt)
+    === Dager igjen
+    #str(data.dagerIgjen)
   ],
-  [],
+  [
+    #if "maksdato" in data [
+      === Maksdato
+      #iso_to_date(data.maksdato)
+    ]
+  ],
+)
+\
+\
+#grid(
+  columns: (1fr, 1fr),
+  column-gutter: 4mm,
+  row-gutter: 8mm,
   [
     #if data.automatiskBehandling [
       === Automatisk behandlet
@@ -75,119 +97,83 @@
       #iso_to_nor_datetime(data.vedtakFattetTidspunkt)
     ]
   ],
-  [],
+    [
+      === Sendt til utbetaling
+      #iso_to_date(data.behandlingsdato)
+    ],
 )
-#v(2mm)
-#line(length: 100%, stroke: 1pt)
-#v(4mm)
+
 ] // end personinfo block
 
 // --- Begrunnelser (delvis innvilgelse / avslag) ---
 
 #let begrunnelser = data.at("begrunnelser", default: (:))
 
-#if "delvisInnvilgelse" in begrunnelser [
-  #block(breakable: false)[
-    == Perioden er delvis innvilget
+#if "delvisInnvilgelse" in begrunnelser {
+new-section([Perioden er delvis innvilget])[
     === Begrunnelse
     #begrunnelser.delvisInnvilgelse
-    #v(2mm)
-    #line(length: 100%, stroke: 1pt)
-    #v(4mm)
-  ]
 ]
+}
 
-#if "avslag" in begrunnelser [
-  #block(breakable: false)[
-    == Perioden er avslått
-    === Begrunnelse
-    #begrunnelser.avslag
-    #v(2mm)
-    #line(length: 100%, stroke: 1pt)
-    #v(4mm)
-  ]
-]
+#if "avslag" in begrunnelser {
+    new-section([Perioden er avslått])[
+        === Begrunnelse
+        #begrunnelser.avslag
+    ]
+}
 
 // --- Utbetalte perioder ---
 
 #let linjer = data.at("linjer", default: ())
-#if linjer.len() > 0 [
-  #block(breakable: false)[
-    === Utbetalte perioder
-    #v(2mm)
-    #table(
-      columns: (auto, auto, 1fr, 1fr, auto),
-      stroke: none,
-      fill: (_, row) => if calc.odd(row) { rgb("#F1F1F1") } else { white },
-      table.header(
-        [*Dato*], [*Utbetalt til*], align(right)[*Beløp per dag*], align(right)[*Totalbeløp*], align(right)[*Sykmeldt*],
-      ),
-      ..for linje in linjer {(
-        if linje.erOpphørt { strike[#iso_to_date(linje.fom) – #iso_to_date(linje.tom)] } else { [#iso_to_date(linje.fom) – #iso_to_date(linje.tom)] },
-        if linje.erOpphørt { strike[#linje.mottaker] } else { [#linje.mottaker] },
-        align(right, if linje.erOpphørt { strike[#format_currency(linje.dagsats) kr] } else { [#format_currency(linje.dagsats) kr] }),
-        align(right, if not linje.erOpphørt { [#format_currency(linje.totalbeløp) kr] }),
-        align(right, if linje.erOpphørt { strike[#str(linje.grad) %] } else { [#str(linje.grad) %] }),
-      )},
-    )
-    #v(4mm)
-    #line(length: 100%, stroke: 1pt)
-    #v(4mm)
-  ]
-]
+#if linjer.len() > 0 {
+    new-section([Utbetalte perioder])[
+        #table(
+            columns: (auto, auto, 1fr, 1fr, auto),
+            stroke: none,
+            fill: (_, row) => if calc.odd(row) { rgb("#F1F1F1") } else { white },
+            table.header(
+              [*Dato*], [*Utbetalt til*], align(right)[*Beløp per dag*], align(right)[*Totalbeløp*], align(right)[*Sykmeldt*],
+            ),
+            ..for linje in linjer {(
+              if linje.erOpphørt { strike[#iso_to_date(linje.fom) – #iso_to_date(linje.tom)] } else { [#iso_to_date(linje.fom) – #iso_to_date(linje.tom)] },
+              if linje.erOpphørt { strike[#linje.mottaker] } else { [#linje.mottaker] },
+              align(right, if linje.erOpphørt { strike[#format_currency(linje.dagsats) kr] } else { [#format_currency(linje.dagsats) kr] }),
+              align(right, if not linje.erOpphørt { [#format_currency(linje.totalbeløp) kr] }),
+              align(right, if linje.erOpphørt { strike[#str(linje.grad) %] } else { [#str(linje.grad) %] }),
+            )},
+            )
+    ]
+}
 
 // --- Ikke utbetalte perioder ---
 
 #let ikkeUtbetalteDager = data.at("ikkeUtbetalteDager", default: ())
-#if ikkeUtbetalteDager.len() > 0 [
-  #block(breakable: false)[
-    === Ikke utbetalte perioder
-    #v(2mm)
+#if ikkeUtbetalteDager.len() > 0 {
+new-section([Ikke utbetalte perioder], pb: false)[
     #table(
-      columns: (auto, 1fr),
-      stroke: none,
-      fill: (_, row) => if calc.odd(row) { rgb("#F1F1F1") } else { white },
-      table.header(
-        [*Dato*], [*Merknad*],
-      ),
-      ..for dag in ikkeUtbetalteDager {(
-        [#iso_to_date(dag.fom) – #iso_to_date(dag.tom)],
-        dag.begrunnelser.join("\n"),
-      )},
+    columns: (auto, 1fr),
+    stroke: none,
+    fill: (_, row) => if calc.odd(row) { rgb("#F1F1F1") } else { white },
+    table.header(
+      [*Dato*], [*Merknad*],
+    ),
+    ..for dag in ikkeUtbetalteDager {(
+      [#iso_to_date(dag.fom) – #iso_to_date(dag.tom)],
+      dag.begrunnelser.join("\n"),
+    )},
     )
-    #v(4mm)
-    #line(length: 100%, stroke: 1pt)
-    #v(4mm)
-  ]
 ]
+}
 
-// --- Oppsummering ---
+// --- Om sykepengegrunnlaget ---
 
-#block(breakable: false)[
-== Oppsummering
+#new-section([Om sykepengegrunnlaget])[
 
 #grid(
   columns: (1fr),
   column-gutter: 4mm,
   row-gutter: 8mm,
-  [
-    === Forbrukte dager
-    #str(data.forbrukteSykedager)
-  ],
-  [
-    === Dager igjen
-    #str(data.dagerIgjen)
-  ],
-  [
-    #if "maksdato" in data [
-      === Maksdato
-      #iso_to_date(data.maksdato)
-    ]
-  ],
-  [
-    === Totalt utbetalt
-    #format_currency(data.sumTotalBeløp) kr
-  ],
   [
     === Dekning
     #str(data.dekning.dekningsgrad) % fra #str(data.dekning.gjelderFraDag). dag
@@ -205,41 +191,36 @@
     #format_currency(data.sykepengegrunnlag) kr
   ],
 )
-    #v(4mm)
-    #line(length: 100%, stroke: 1pt)
-    #v(4mm)
-] // end oppsummering block
+]
 
 // --- Skjønnsfastsettelse ---
 
-#if "skjønnsfastsettingårsak" in data and data.skjønnsfastsettingårsak != none [
-  #block(breakable: true)[
-    == Sykepengegrunnlaget er skjønnsfastsatt
-
-    #grid(
-      columns: (1fr, 1fr),
-      column-gutter: 4mm,
-      row-gutter: 8mm,
-      [
-        === Årsak
-        #data.skjønnsfastsettingårsak
-      ],
-      ..if "skjønnsfastsettingtype" in data and data.skjønnsfastsettingtype != none {([
-        === Type skjønnsfastsettelse
-        #data.skjønnsfastsettingtype
-      ],)},
-      ..if "begrunnelseFraMal" in begrunnelser {([
-        === Begrunnelse
-        #begrunnelser.begrunnelseFraMal
-      ],)},
-      ..if "begrunnelseFraFritekst" in begrunnelser {([
-        === Begrunnelse fra saksbehandler
-        #begrunnelser.begrunnelseFraFritekst
-      ],)},
-      ..if "begrunnelseFraKonklusjon" in begrunnelser {([
-        === Konklusjon
-        #begrunnelser.begrunnelseFraKonklusjon
-      ],)},
-    )
-  ]
+#if "skjønnsfastsettingårsak" in data and data.skjønnsfastsettingårsak != none {
+new-section([Sykepengegrunnlaget er skjønnsfastsatt])[
+      #grid(
+        columns: (1fr),
+        column-gutter: 4mm,
+        row-gutter: 8mm,
+        [
+          === Årsak
+          #data.skjønnsfastsettingårsak
+        ],
+          ..if "skjønnsfastsettingtype" in data and data.skjønnsfastsettingtype != none {([
+            === Type skjønnsfastsettelse
+            #data.skjønnsfastsettingtype
+          ],)},
+        ..if "begrunnelseFraMal" in begrunnelser {([
+          === Begrunnelse
+          #begrunnelser.begrunnelseFraMal
+        ],)},
+        ..if "begrunnelseFraFritekst" in begrunnelser {([
+          === Begrunnelse fra saksbehandler
+          #begrunnelser.begrunnelseFraFritekst
+        ],)},
+        ..if "begrunnelseFraKonklusjon" in begrunnelser {([
+          === Konklusjon
+          #begrunnelser.begrunnelseFraKonklusjon
+        ],)},
+      )
 ]
+}

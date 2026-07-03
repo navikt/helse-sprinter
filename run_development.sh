@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" || exit; pwd)"
-IMAGE_NAME=ghcr.io/navikt/pdfgenrs:0.1.71
+IMAGE_NAME=ghcr.io/navikt/pdfgenrs:1.0.2
 CONTAINER_NAME=sprinter-lokal
 
 docker pull -q --platform linux/amd64 "${IMAGE_NAME}"
