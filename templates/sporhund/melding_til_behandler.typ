@@ -12,7 +12,7 @@
 
 // --- Personinfo ---
 
-#block(breakable: false)[
+#block(breakable: true)[
 #grid(
   columns: (1fr),
   column-gutter: 4mm,

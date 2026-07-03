@@ -205,16 +205,15 @@
     #format_currency(data.sykepengegrunnlag) kr
   ],
 )
+    #v(4mm)
+    #line(length: 100%, stroke: 1pt)
+    #v(4mm)
 ] // end oppsummering block
 
 // --- Skjønnsfastsettelse ---
 
 #if "skjønnsfastsettingårsak" in data and data.skjønnsfastsettingårsak != none [
-  #block(breakable: false)[
-    #v(4mm)
-    #line(length: 100%, stroke: 1pt)
-    #v(4mm)
-
+  #block(breakable: true)[
     == Sykepengegrunnlaget er skjønnsfastsatt
 
     #grid(

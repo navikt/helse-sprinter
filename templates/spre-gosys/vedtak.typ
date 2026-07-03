@@ -217,7 +217,7 @@
 // --- Skjønnsfastsettelse ---
 
 #if "skjønnsfastsettingårsak" in data and data.skjønnsfastsettingårsak != none [
-  #block(breakable: false)[
+  #block(breakable: true)[
     == Sykepengegrunnlaget er skjønnsfastsatt
 
   #grid(
