@@ -48,17 +48,8 @@
     column-gutter: 4mm,
     row-gutter: 8mm,
     [
-      === Søknadsperiode
-      #iso_to_date(data.fom) – #iso_to_date(data.tom)
-    ],
-    [
       === Skjæringstidspunkt
       #iso_to_date(data.skjæringstidspunkt)
-    ],
-
-    [
-      === Totalbeløp for denne perioden
-      #format_currency(data.sumNettoBeløp) kr
     ],
     [
       === Forbrukte dager
@@ -66,8 +57,17 @@
     ],
 
     [
+      === Søknadsperiode
+      #iso_to_date(data.fom) – #iso_to_date(data.tom)
+    ],
+    [
       === Dager igjen
       #str(data.dagerIgjen)
+    ],
+
+    [
+      === Totalbeløp for denne perioden
+      #format_currency(data.sumNettoBeløp) kr
     ],
     [
       #if "maksdato" in data [
