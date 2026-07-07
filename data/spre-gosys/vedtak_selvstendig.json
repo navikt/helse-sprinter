@@ -76,6 +76,7 @@
   ],
   "dekning": {
     "dekningsgrad": 80,
-    "gjelderFraDag": 17
-  }
+    "gjelderFraDag": 1
+  },
+  "forsikringskategori": "Individuell"
 }

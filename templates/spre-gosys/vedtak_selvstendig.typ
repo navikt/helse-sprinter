@@ -75,6 +75,15 @@
         #iso_to_date(data.maksdato)
       ]
     ],
+
+    [
+      === Forsikring
+      #if data.forsikringskategori != none [
+        #str(data.forsikringskategori) forsikring med #str(data.dekning.dekningsgrad) % dekning fra #str(data.dekning.gjelderFraDag). dag.
+      ] else [
+        Ingen forsikring
+      ]
+    ],
   )
   \
   \
