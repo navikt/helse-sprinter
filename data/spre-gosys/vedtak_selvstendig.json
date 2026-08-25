@@ -75,9 +75,9 @@
     }
   ],
   "dekning": {
-    "dekningsgrad": 80,
+    "dekningsgrad": 100,
     "gjelderFraDag": 1
   },
-  "individuellForsikringNavn": "80 % fra 1. dag (Individuell)",
-  "kollektivForsikringNavn": "100 % fra 17. dag (Kollektiv)"
+  "individuellForsikringNavn": "Jordbruker tilleggsforsikring 100 % fra 1. dag",
+  "kollektivForsikringNavn": "Jordbruker 100 % fra 17. dag"
 }

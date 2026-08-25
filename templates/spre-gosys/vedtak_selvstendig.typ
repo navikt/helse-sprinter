@@ -79,8 +79,10 @@
     [
       === Forsikring
       #if data.kollektivForsikringNavn != none and data.individuellForsikringNavn != none [
-        #str(data.individuellForsikringNavn) og \
-        #str(data.kollektivForsikringNavn)
+        Individuell
+        - #str(data.individuellForsikringNavn) \
+        Kollektiv
+        - #str(data.kollektivForsikringNavn)
       ] else if data.individuellForsikringNavn != none [
         #str(data.individuellForsikringNavn)
       ] else if data.kollektivForsikringNavn != none [
