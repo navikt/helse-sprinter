@@ -78,6 +78,6 @@
     "dekningsgrad": 80,
     "gjelderFraDag": 1
   },
-  "indivieduellForsikringNavn": "80 % fra 1. dag (Individuell)",
+  "individuellForsikringNavn": "80 % fra 1. dag (Individuell)",
   "kollektivForsikringNavn": "100 % fra 17. dag (Kollektiv)"
 }
