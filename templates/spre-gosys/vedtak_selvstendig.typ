@@ -78,8 +78,13 @@
 
     [
       === Forsikring
-      #if data.forsikringskategori != none [
-        #str(data.forsikringskategori) forsikring med #str(data.dekning.dekningsgrad) % dekning fra #str(data.dekning.gjelderFraDag). dag.
+      #if data.kollektivForsikringNavn != none and data.indivieduellForsikringNavn != none [
+        #str(data.indivieduellForsikringNavn) og \
+        #str(data.kollektivForsikringNavn)
+      ] else if data.indivieduellForsikringNavn != none [
+        #str(data.indivieduellForsikringNavn)
+      ] else if data.kollektivForsikringNavn != none [
+        #str(data.kollektivForsikringNavn)
       ] else [
         Ingen forsikring
       ]
